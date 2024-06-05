@@ -1,7 +1,7 @@
-import { View, Image } from "react-native";
+import { Image } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-export default function BackgroundEntry() {
+export function BackgroundEntry() {
   return (
     <Animatable.View animation="fadeIn" delay={200} className="absolute ">
       <Animatable.View

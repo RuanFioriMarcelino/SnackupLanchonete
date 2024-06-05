@@ -14,7 +14,7 @@ function Field({ ...rest }: TextInputProps) {
   return (
     <TextInput
       className="flex-1 text-gray font-regular text-base"
-      placeholderTextColor={colors.gray[200]}
+      placeholderTextColor={colors.gray}
       {...rest}
     />
   );

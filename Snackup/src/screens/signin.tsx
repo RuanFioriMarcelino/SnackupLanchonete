@@ -1,15 +1,8 @@
 import React from "react";
-import {
-  Image,
-  ImageBackground,
-  Text,
-  Touchable,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { Input } from "@/components/input";
 import { ButtonOrange } from "@/components/buttonOrange";
-import BackgroundEntry from "@/components/backgroundEntry";
+import { BackgroundEntry } from "@/components/backgroundEntry";
 
 export default function Signin({ navigation }: any) {
   return (

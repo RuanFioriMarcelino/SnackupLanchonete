@@ -9,11 +9,11 @@ import {
 } from "react-native";
 import { Input } from "@/components/input";
 import { ButtonOrange } from "@/components/buttonOrange";
-import BackgroundEntry from "@/components/backgroundEntry";
+import { BackgroundEntry } from "@/components/backgroundEntry";
 
 export default function Signup({ navigation }: any) {
   return (
-    <View className="flex-1 bg-white items-center ">
+    <View className="flex-1 bg-white items-center">
       <View className="absolute items-center">
         <BackgroundEntry />
       </View>
