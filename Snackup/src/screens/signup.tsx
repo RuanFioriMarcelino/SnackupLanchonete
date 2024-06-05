@@ -11,38 +11,34 @@ import { Input } from "@/components/input";
 import { ButtonOrange } from "@/components/buttonOrange";
 import BackgroundEntry from "@/components/backgroundEntry";
 
-export default function Signin({ navigation }: any) {
+export default function Signup({ navigation }: any) {
   return (
-    <View className="flex-1 bg-white items-center ">
+    <View className="flex-1 bg-white item ">
       <View className="absolute">
         <BackgroundEntry />
       </View>
 
-      <View className="items-center gap-7 mt-48">
+      <View className="items-center gap-14 mt-32">
         <Text className="text-5xl font-bold text-orange uppercase ">
-          Entrar
+          Registre-se
         </Text>
 
-        <View className="gap-6 items-center ">
+        <View className="gap-6 items-center">
           <Input>
-            <Input.Field placeholder="Usuário" />
+            <Input.Field placeholder="Nome de Usuário" />
+          </Input>
+          <Input>
+            <Input.Field placeholder="E-Mail" keyboardType="email-address" />
           </Input>
           <Input>
             <Input.Field placeholder="Senha" />
           </Input>
-
-          <TouchableOpacity activeOpacity={0.7}>
-            <Text className="text-orange font-bold text-center underline">
-              Esqueci minha senha
-            </Text>
-          </TouchableOpacity>
-
           <View className="w-64 h-16 ">
-            <ButtonOrange title="entrar" />
+            <ButtonOrange title="registrar" />
           </View>
         </View>
 
-        <View className="items-center gap-10 mt-4  ">
+        <View className=" items-center gap-8  ">
           <View className="flex-row gap-3 items-center w-11/12 ">
             <View className="border h-line w-full flex-1 bg-black" />
             <Text>ou continue com</Text>
@@ -63,9 +59,9 @@ export default function Signin({ navigation }: any) {
             </TouchableOpacity>
           </View>
           <View className="flex-row">
-            <Text>Não Tem Uma Conta?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-              <Text className="text-orange font-medium"> Criar Agora</Text>
+            <Text>Já Tem Uma Conta?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Signin")}>
+              <Text className="text-orange font-medium"> Entrar Agora</Text>
             </TouchableOpacity>
           </View>
         </View>

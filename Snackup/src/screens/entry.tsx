@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import BackgroundIcons from "@/components/backgroundIcons";
+import BackgroundIcons from "@/components/backgroundIndex";
 import { Button } from "@/components/button";
 import * as Animatable from "react-native-animatable";
 
@@ -37,7 +37,7 @@ export default function Entry({ navigation }: any) {
           <Text className="text-white font-bold text-xl">OU </Text>
           <View className="h-16 w-10/12">
             <TouchableOpacity
-              onPress={() => navigation.navigate("Signin")}
+              onPress={() => navigation.navigate("Home")}
               activeOpacity={0.7}
             >
               <Text className="uppercase text-lg text-orange font-bold text-center bg-white/75 rounded-lg p-1">

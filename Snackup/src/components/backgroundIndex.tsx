@@ -1,4 +1,3 @@
-import { View, Image } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 export default function BackgroundIcons() {
