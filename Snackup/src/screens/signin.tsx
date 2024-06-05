@@ -14,7 +14,7 @@ import BackgroundEntry from "@/components/backgroundEntry";
 export default function Signin({ navigation }: any) {
   return (
     <View className="flex-1 bg-white items-center ">
-      <View className="absolute">
+      <View className="absolute items-center">
         <BackgroundEntry />
       </View>
 

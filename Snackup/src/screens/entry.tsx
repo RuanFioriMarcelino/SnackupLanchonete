@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Pressable } from "react-native";
 import BackgroundIcons from "@/components/backgroundIndex";
 import { Button } from "@/components/button";
 import * as Animatable from "react-native-animatable";
@@ -28,22 +28,22 @@ export default function Entry({ navigation }: any) {
           delay={400}
           className="p-20 top-96 items-center gap-4"
         >
-          <View className="h-20 w-full">
+          <View className="h-20 w-full ">
             <Button
               title="acesse"
               onPress={() => navigation.navigate("Signin")}
             />
           </View>
           <Text className="text-white font-bold text-xl">OU </Text>
-          <View className="h-16 w-10/12">
-            <TouchableOpacity
+          <View className=" w-10/12 rounded-lg bg-white/75 p-1">
+            <Pressable
               onPress={() => navigation.navigate("Home")}
-              activeOpacity={0.7}
+              className="opacity-70 rounded-lg"
             >
-              <Text className="uppercase text-lg text-orange font-bold text-center bg-white/75 rounded-lg p-1">
+              <Text className="uppercase text-lg text-orange font-bold text-center ">
                 entrar como visitante
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </Animatable.View>
       </View>
