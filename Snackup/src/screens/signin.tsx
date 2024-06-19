@@ -26,13 +26,17 @@ export default function Signin({ navigation }: any) {
         email,
         password
       );
-      console.log("User logged in:", userCredential.user);
-      navigation.navigate("Home", { idUser: userCredential.user.uid });
+      if (userCredential.user.uid === "QvoPuwnStzaNYro95RIe8u6LEZv1") {
+        navigation.navigate("Admin", { idUser: userCredential.user.uid });
+      } else {
+        navigation.navigate("Home", { idUser: userCredential.user.uid });
+      }
+      console.log(userCredential.user.uid);
     } catch (error) {
-      console.error("Error logging in:", error);
       setError(true);
     }
   };
+  ("");
   useEffect(() => {
     const statusAuth = onAuthStateChanged(auth, (user) => {
       if (user) {
