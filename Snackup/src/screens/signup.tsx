@@ -1,19 +1,44 @@
-import React from "react";
-import {
-  Image,
-  ImageBackground,
-  Text,
-  Touchable,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, { useState } from "react";
 import { Input } from "@/components/input";
 import { ButtonOrange } from "@/components/buttonOrange";
 import { BackgroundEntry } from "@/components/backgroundEntry";
 
+import {
+  View,
+  Text,
+  Image,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
+import { auth } from "../config/firebaseconfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 export default function Signup({ navigation }: any) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const NovoUsuario = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log("User registered:", userCredential.user);
+      Alert.alert("conta criada");
+      navigation.navigate("Signin");
+    } catch (error) {
+      //console.error('Error signing up:', error);
+      Alert.alert("Error");
+    }
+  };
   return (
-    <View className="flex-1 bg-white items-center">
+    <KeyboardAvoidingView
+      className="flex-1 bg-white items-center"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <View className="absolute items-center">
         <BackgroundEntry />
       </View>
@@ -28,13 +53,24 @@ export default function Signup({ navigation }: any) {
             <Input.Field placeholder="Nome de Usuário" />
           </Input>
           <Input>
-            <Input.Field placeholder="E-Mail" keyboardType="email-address" />
+            <Input.Field
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
           </Input>
           <Input>
-            <Input.Field placeholder="Senha" />
+            <Input.Field
+              placeholder="Senha"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
           </Input>
           <View className="w-64 h-16 ">
-            <ButtonOrange title="registrar" />
+            <ButtonOrange title="registrar" onPress={NovoUsuario} />
           </View>
         </View>
 
@@ -66,6 +102,6 @@ export default function Signup({ navigation }: any) {
           </View>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }

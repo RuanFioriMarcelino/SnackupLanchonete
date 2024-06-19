@@ -1,12 +1,53 @@
-import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { Input } from "@/components/input";
 import { ButtonOrange } from "@/components/buttonOrange";
 import { BackgroundEntry } from "@/components/backgroundEntry";
+import { auth, onAuthStateChanged } from "../config/firebaseconfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Signin({ navigation }: any) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<boolean>();
+
+  const LoginUser = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log("User logged in:", userCredential.user);
+      navigation.navigate("Home", { idUser: userCredential.user.uid });
+    } catch (error) {
+      console.error("Error logging in:", error);
+      setError(true);
+    }
+  };
+  useEffect(() => {
+    const statusAuth = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigation.navigate("Home", { idUser: user.uid });
+      }
+    });
+
+    return () => statusAuth();
+  }, []);
+
   return (
-    <View className="flex-1 bg-white items-center ">
+    <KeyboardAvoidingView
+      className="flex-1 bg-white items-center "
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <View className="absolute items-center">
         <BackgroundEntry />
       </View>
@@ -18,21 +59,43 @@ export default function Signin({ navigation }: any) {
 
         <View className="gap-6 items-center ">
           <Input>
-            <Input.Field placeholder="Usuário" />
+            <Input.Field
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
           </Input>
           <Input>
-            <Input.Field placeholder="Senha" />
+            <Input.Field
+              placeholder="Password"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
           </Input>
-
+          {error ? (
+            <View>
+              <Text>Email ou senha inválidos</Text>
+            </View>
+          ) : (
+            <View />
+          )}
+          {email === "" || password == "" ? (
+            <View className="w-64 h-16 ">
+              <ButtonOrange title="entrar" disabled />
+            </View>
+          ) : (
+            <View className="w-64 h-16 ">
+              <ButtonOrange title="entrar" onPress={LoginUser} />
+            </View>
+          )}
           <TouchableOpacity activeOpacity={0.7}>
             <Text className="text-orange font-bold text-center underline">
               Esqueci minha senha
             </Text>
           </TouchableOpacity>
-
-          <View className="w-64 h-16 ">
-            <ButtonOrange title="entrar" />
-          </View>
         </View>
 
         <View className="items-center gap-10 mt-4  ">
@@ -63,6 +126,6 @@ export default function Signin({ navigation }: any) {
           </View>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
