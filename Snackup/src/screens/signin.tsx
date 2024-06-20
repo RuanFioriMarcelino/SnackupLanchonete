@@ -26,7 +26,10 @@ export default function Signin({ navigation }: any) {
         email,
         password
       );
-      if (userCredential.user.uid === "QvoPuwnStzaNYro95RIe8u6LEZv1") {
+      if (
+        userCredential.user.uid === "QvoPuwnStzaNYro95RIe8u6LEZv1" ||
+        userCredential.user.uid === "XPdpQXqPUiSTAN8didB0eBDeJ8B3"
+      ) {
         navigation.navigate("Admin", { idUser: userCredential.user.uid });
       } else {
         navigation.navigate("Home", {

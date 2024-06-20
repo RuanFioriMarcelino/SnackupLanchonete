@@ -1,7 +1,8 @@
 import { Button } from "@/components/button";
+("");
 import { Text, View } from "react-native";
 
-export function Admin() {
+function Admin({ navigation }: any) {
   return (
     <View className="bg-orange flex-1 ">
       <View className="bg-white rounded-b-large items-center justify-center p-2 h-44 ">
@@ -14,7 +15,10 @@ export function Admin() {
       </View>
       <View className="gap-4  justify-center items-center flex-1">
         <View className="h-16 w-56">
-          <Button title="Produtos" />
+          <Button
+            title="Produtos"
+            onPress={() => navigation.navigate("Create")}
+          />
         </View>
         <View className="h-16 w-56 ">
           <Button title="Cadastrar" />
@@ -29,3 +33,5 @@ export function Admin() {
     </View>
   );
 }
+
+export default Admin;
