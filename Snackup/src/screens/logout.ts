@@ -4,7 +4,7 @@ import { auth } from "../config/firebaseconfig";
 async function logout({ navigation }: { navigation: any }) {
   try {
     await signOut(auth);
-    navigation.replace("Signin");
+    navigation.popToTop();
   } catch (error) {
     console.error("Error logging out: ", error);
   }
