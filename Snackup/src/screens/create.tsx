@@ -11,16 +11,13 @@ function Create({ navigation }: any) {
   const [nome, setNome] = useState<string>("");
   const [descricacao, setDescricacao] = useState<string>("");
   const [valor, setValor] = useState<string>("");
-  const [image, setImage] = useState(null);
-  const imageUri =
-    "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FSnackup-ba4743c1-784a-47a8-a9f8-3b2ab9da5383/ImagePicker/3db795f8-369d-48b8-ab91-b2ad6e7dcbeb.jpeg";
-
+  const [image, setImage] = useState<string>("");
+  const imageUri = image;
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [3, 4],
       quality: 1,
     });
 
@@ -45,14 +42,20 @@ function Create({ navigation }: any) {
         imagem: image,
         idUser: user.uid,
       });
+      setNome("");
+      setDescricacao("");
+      setValor("");
+      setImage("");
     } catch (error) {
       console.error("Error adding snackup: ", error);
     }
   };
   return (
     <View className="flex-1 bg-orange items-center">
-      <Text className="text-5xl mt-10">Cadastrar Produto</Text>
-      <View className="gap-3">
+      <Text className="text-5xl mt-20 text-white font-medium">
+        Cadastrar Produto
+      </Text>
+      <View className="gap-3 mt-10">
         <Input.Field
           className="bg-white text-center p-4 text-xl rounded-lg"
           placeholder="Nome do produto"
@@ -72,16 +75,20 @@ function Create({ navigation }: any) {
           value={valor}
         />
         <View className="h-20">
-          <Button title="Pick an image from camera roll" onPress={pickImage} />
-          {image && <Image source={{ uri: image }} className="w-40 h-40" />}
+          <Button title="Foto do Produto" onPress={pickImage} />
         </View>
-        <View className="h-20   ">
-          <Button
-            title="Cadastrar"
-            onPress={() => {
-              addTask();
-            }}
-          />
+
+        <View className="h-20 mt-10">
+          {nome == "" || descricacao == "" || valor == "" || image == "" ? (
+            <Button title="Cadastrar" disabled />
+          ) : (
+            <Button
+              title="Cadastrar"
+              onPress={() => {
+                addTask();
+              }}
+            />
+          )}
           <Image source={{ uri: imageUri }} className="w-20 h-20" />
         </View>
       </View>
