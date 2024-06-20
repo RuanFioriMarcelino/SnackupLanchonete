@@ -17,7 +17,7 @@ import { colors } from "@/styles/colors";
 export default function Signin({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false); // Corrigido para inicializar como false
+  const [error, setError] = useState<boolean>();
 
   const LoginUser = async () => {
     try {

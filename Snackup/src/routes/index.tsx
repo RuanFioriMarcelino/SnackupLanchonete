@@ -1,36 +1,56 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { Alert } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
 import { Admin } from "@/screens/admin";
 import Entry from "@/screens/entry";
 import Home from "@/screens/home";
 import Signin from "@/screens/signin";
 import Signup from "@/screens/signup";
 import { colors } from "@/styles/colors";
-import auth from "@react-native-firebase/auth";
-import { useNavigation } from "expo-router";
-import { DrawerActions } from "@react-navigation/native";
+import logout from "@/screens/logout";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-function logout() {
-  const navigation = useNavigation();
-  useEffect(() => {
-    const handleLogout = async () => {
-      await auth()
-        .signOut()
-        .then(() => console.log("User signed out!"));
-      navigation.dispatch(DrawerActions.closeDrawer());
-    };
-    handleLogout();
-  }, []);
-  return null;
+function CustomDrawerContent(props: any) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem
+        label="Sair"
+        onPress={() =>
+          Alert.alert(
+            "Sair",
+            "Você tem certeza que deseja sair?",
+            [
+              {
+                text: "Cancelar",
+                style: "cancel",
+              },
+              {
+                text: "Sair",
+                onPress: () => logout(props),
+                style: "destructive",
+              },
+            ],
+            { cancelable: false }
+          )
+        }
+      />
+    </DrawerContentScrollView>
+  );
 }
 
 function MyDrawer() {
   return (
     <Drawer.Navigator
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerTransparent: true,
         headerTitle: "",
@@ -44,7 +64,6 @@ function MyDrawer() {
       }}
     >
       <Drawer.Screen name="HomeFunction" component={Home} />
-      <Drawer.Screen name="logout" component={logout} />
     </Drawer.Navigator>
   );
 }
