@@ -3,9 +3,6 @@ import React from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { colors } from "@/styles/colors";
 import "react-native-gesture-handler";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import Signin from "./signin";
-const Drawer = createDrawerNavigator();
 
 export default function Home() {
   return (

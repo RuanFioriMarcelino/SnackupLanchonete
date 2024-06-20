@@ -4,7 +4,6 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  Alert,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
@@ -13,11 +12,12 @@ import { ButtonOrange } from "@/components/buttonOrange";
 import { BackgroundEntry } from "@/components/backgroundEntry";
 import { auth, onAuthStateChanged } from "../config/firebaseconfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { colors } from "@/styles/colors";
 
 export default function Signin({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<boolean>();
+  const [error, setError] = useState(false); // Corrigido para inicializar como false
 
   const LoginUser = async () => {
     try {
@@ -29,27 +29,30 @@ export default function Signin({ navigation }: any) {
       if (userCredential.user.uid === "QvoPuwnStzaNYro95RIe8u6LEZv1") {
         navigation.navigate("Admin", { idUser: userCredential.user.uid });
       } else {
-        navigation.navigate("Home", { idUser: userCredential.user.uid });
+        navigation.navigate("Home", {
+          idUser: userCredential.user.uid,
+        });
       }
       console.log(userCredential.user.uid);
     } catch (error) {
+      console.error("Erro ao fazer login:", error);
       setError(true);
     }
   };
-  ("");
+
   useEffect(() => {
-    const statusAuth = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         navigation.navigate("Home", { idUser: user.uid });
       }
     });
 
-    return () => statusAuth();
+    return unsubscribe;
   }, []);
 
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-white items-center "
+      style={{ flex: 1, backgroundColor: colors.white, alignItems: "center" }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <View className="absolute items-center">
@@ -57,11 +60,9 @@ export default function Signin({ navigation }: any) {
       </View>
 
       <View className="items-center gap-7 mt-48">
-        <Text className="text-5xl font-bold text-orange uppercase ">
-          Entrar
-        </Text>
+        <Text className="text-5xl font-bold text-orange uppercase">Entrar</Text>
 
-        <View className="gap-6 items-center ">
+        <View className="gap-6 items-center">
           <Input>
             <Input.Field
               placeholder="Email"
@@ -73,26 +74,24 @@ export default function Signin({ navigation }: any) {
           </Input>
           <Input>
             <Input.Field
-              placeholder="Password"
+              placeholder="Senha"
               value={password}
               onChangeText={setPassword}
               secureTextEntry
             />
           </Input>
-          {error ? (
+          {error && (
             <View>
               <Text>Email ou senha inválidos</Text>
             </View>
-          ) : (
-            <View />
           )}
-          {email === "" || password == "" ? (
-            <View className="w-64 h-16 ">
-              <ButtonOrange title="entrar" disabled />
+          {email === "" || password === "" ? (
+            <View className="w-64 h-16">
+              <ButtonOrange title="Entrar" disabled />
             </View>
           ) : (
-            <View className="w-64 h-16 ">
-              <ButtonOrange title="entrar" onPress={LoginUser} />
+            <View className="w-64 h-16">
+              <ButtonOrange title="Entrar" onPress={LoginUser} />
             </View>
           )}
           <TouchableOpacity activeOpacity={0.7}>
@@ -102,8 +101,8 @@ export default function Signin({ navigation }: any) {
           </TouchableOpacity>
         </View>
 
-        <View className="items-center gap-10 mt-4  ">
-          <View className="flex-row gap-3 items-center w-11/12 ">
+        <View className="items-center gap-10 mt-4">
+          <View className="flex-row gap-3 items-center w-11/12">
             <View className="border h-line w-full flex-1 bg-black" />
             <Text>ou continue com</Text>
             <View className="border h-line w-full flex-1 bg-black" />
