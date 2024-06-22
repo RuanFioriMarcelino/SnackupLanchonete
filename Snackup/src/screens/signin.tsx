@@ -27,8 +27,8 @@ export default function Signin({ navigation }: any) {
         password
       );
       if (
-        userCredential.user.uid === "QvoPuwnStzaNYro95RIe8u6LEZv1" ||
-        userCredential.user.uid === "XPdpQXqPUiSTAN8didB0eBDeJ8B3"
+        userCredential.user.uid === "SCQuLd78XnPRdVXjEyYO8GMMLfO2" ||
+        userCredential.user.uid === "wQJtab93vGPboIpkMYqzNNCHZHt2"
       ) {
         navigation.navigate("Admin", { idUser: userCredential.user.uid });
       } else {

@@ -2,18 +2,15 @@ import { Button } from "@/components/button";
 import { auth, database } from "@/config/firebaseconfig";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
-("");
 import { Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
 interface Produto {
-  id: string;
-  descricao: string;
   nome: string;
-  valor: string;
+  idUser: string;
 }
 
-function Admin({ navigation }: any) {
+function Admin({ navigation }: any, { nome }: Produto) {
   const [produto, setProduto] = useState<Produto[]>([]);
   const user = auth.currentUser;
   useEffect(() => {
@@ -21,10 +18,15 @@ function Admin({ navigation }: any) {
     const listen = onSnapshot(productCollection, (query) => {
       const list: Produto[] = [];
       query.forEach((doc) => {
-        list.push({ ...doc.data(), id: doc.id } as Produto);
+        const data = doc.data() as Produto;
+        // Exemplo de condição: adicionar apenas produtos com valor não vazio
+        if (data.idUser == user?.uid) {
+          list.push({ ...data, idUser: doc.id });
+        }
       });
       setProduto(list);
     });
+
     return () => listen();
   }, []);
 
@@ -35,11 +37,17 @@ function Admin({ navigation }: any) {
           Painel do Administrador
         </Text>
         <Text className="text-lg font-regular color-orange">
-          Bem vindo
           <FlatList
             data={produto}
             renderItem={({ item }) => {
-              return <Text>{item.nome}</Text>;
+              return (
+                <View>
+                  <Text className="font-regular text-xl">
+                    {" "}
+                    Bem Vindo {item.nome}
+                  </Text>
+                </View>
+              );
             }}
           />
         </Text>
