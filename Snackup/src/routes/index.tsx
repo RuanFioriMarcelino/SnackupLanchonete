@@ -7,13 +7,16 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { Admin } from "@/screens/admin";
+import Admin from "@/screens/admin";
 import Entry from "@/screens/entry";
 import Home from "@/screens/home";
 import Signin from "@/screens/signin";
 import Signup from "@/screens/signup";
 import { colors } from "@/styles/colors";
 import logout from "@/screens/logout";
+import Create from "@/screens/create";
+import Read from "@/screens/read";
+import Update from "@/screens/update";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -94,6 +97,21 @@ export default function MyStack() {
       <Stack.Screen
         name="Admin"
         component={Admin}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Read"
+        component={Read}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Create"
+        component={Create}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Update"
+        component={Update}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

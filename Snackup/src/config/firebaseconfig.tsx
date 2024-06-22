@@ -32,5 +32,3 @@ export {
   auth,
   onAuthStateChanged,
 };
-
-export default app;

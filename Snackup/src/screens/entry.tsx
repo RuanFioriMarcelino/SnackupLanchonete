@@ -37,7 +37,7 @@ export default function Entry({ navigation }: any) {
           <Text className="text-white font-bold text-xl">OU </Text>
           <View className=" w-10/12 rounded-lg bg-white/75 p-1">
             <Pressable
-              onPress={() => navigation.navigate("Home")}
+              onPress={() => navigation.navigate("Admin")}
               className="opacity-70 rounded-lg"
             >
               <Text className="uppercase text-lg text-orange font-bold text-center ">
