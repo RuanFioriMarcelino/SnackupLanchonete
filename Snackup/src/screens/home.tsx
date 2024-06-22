@@ -1,10 +1,40 @@
-import { View, Text, TextInput, ScrollView, Image } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  Image,
+  FlatList,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { colors } from "@/styles/colors";
 import "react-native-gesture-handler";
+import { collection, doc, onSnapshot } from "firebase/firestore";
+import { database } from "@/config/firebaseconfig";
+
+interface Produto {
+  id: string;
+  nome: string;
+  descricao: string;
+  valor: string;
+  imagem: string;
+}
 
 export default function Home() {
+  const [produto, setProduto] = useState<Produto[]>();
+
+  useEffect(() => {
+    const productCollection = collection(database, "Produto");
+    const listen = onSnapshot(productCollection, (query) => {
+      const list: Produto[] = [];
+      query.forEach((doc) => {
+        list.push({ ...doc.data(), id: doc.id } as Produto);
+      });
+      setProduto(list);
+    });
+  }, []);
+
   return (
     <View className="bg-orange flex-1 items-center ">
       <Text className="text-7xl font-bold text-white mt-9">SNACKUP</Text>
@@ -33,15 +63,26 @@ export default function Home() {
             <ScrollView
               showsHorizontalScrollIndicator={false}
               horizontal={true}
-              className="bg-orange p-4 rounded-bl-lg"
+              className="bg-orange p-4 rounded-bl-lg "
             >
-              <View className="flex-row gap-4">
-                <Image source={require("@/assets/image.png")} />
-                <Image source={require("@/assets/image.png")} />
-                <Image source={require("@/assets/image.png")} />
-                <Image source={require("@/assets/image.png")} />
-                <Image source={require("@/assets/image.png")} />
-              </View>
+              <FlatList
+                horizontal={true}
+                data={produto}
+                renderItem={({ item }) => {
+                  return (
+                    <View className="mr-4 bg-white rounded-lg ">
+                      <Image
+                        source={{ uri: item.imagem }}
+                        className="w-28 h-24 rounded-t-lg"
+                      />
+                      <View className="p-1 -mt-1 bg-white rounded-b-lg">
+                        <Text className="font-bold">{item.nome}</Text>
+                        <Text className="text-orange">R$ {item.valor}</Text>
+                      </View>
+                    </View>
+                  );
+                }}
+              />
             </ScrollView>
           </View>
         </View>

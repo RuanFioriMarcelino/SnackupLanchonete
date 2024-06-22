@@ -12,12 +12,14 @@ import {
   Platform,
   TouchableOpacity,
 } from "react-native";
-import { auth } from "../config/firebaseconfig";
+import { auth, database } from "../config/firebaseconfig";
+import { collection, addDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Signup({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [nome, setNome] = useState<string>("");
 
   const NovoUsuario = async () => {
     try {
@@ -26,11 +28,18 @@ export default function Signup({ navigation }: any) {
         email,
         password
       );
+
+      const userCollection = collection(database, "Usuario");
+      addDoc(userCollection, {
+        nome: nome,
+        idUser: userCredential.user.uid,
+      });
+      setNome("");
+
       console.log("User registered:", userCredential.user);
       Alert.alert("conta criada");
       navigation.navigate("Signin");
     } catch (error) {
-      //console.error('Error signing up:', error);
       Alert.alert("Error");
     }
   };
@@ -50,7 +59,11 @@ export default function Signup({ navigation }: any) {
 
         <View className="gap-6 items-center">
           <Input>
-            <Input.Field placeholder="Nome de Usuário" />
+            <Input.Field
+              placeholder="Nome de Usuário"
+              value={nome}
+              onChangeText={setNome}
+            />
           </Input>
           <Input>
             <Input.Field

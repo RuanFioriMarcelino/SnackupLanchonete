@@ -9,10 +9,12 @@ import * as ImagePicker from "expo-image-picker";
 
 function Create({ navigation }: any) {
   const [nome, setNome] = useState<string>("");
-  const [descricacao, setDescricacao] = useState<string>("");
+  const [descricao, setDescricao] = useState<string>("");
   const [valor, setValor] = useState<string>("");
   const [image, setImage] = useState<string>("");
+
   const imageUri = image;
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -28,7 +30,7 @@ function Create({ navigation }: any) {
     }
   };
 
-  const addTask = async () => {
+  const addProduto = async () => {
     try {
       const user = auth.currentUser; // Obtém o usuário atualmente autenticado
       if (!user) {
@@ -37,13 +39,13 @@ function Create({ navigation }: any) {
       const tasksCollection = collection(database, "Produto");
       await addDoc(tasksCollection, {
         nome: nome,
-        descricacao: descricacao,
+        descricao: descricao,
         valor: valor,
         imagem: image,
         idUser: user.uid,
       });
       setNome("");
-      setDescricacao("");
+      setDescricao("");
       setValor("");
       setImage("");
     } catch (error) {
@@ -65,8 +67,8 @@ function Create({ navigation }: any) {
         <Input.Field
           className="bg-white text-center p-4 text-xl rounded-lg"
           placeholder="Descricação do produto"
-          onChangeText={setDescricacao}
-          value={descricacao}
+          onChangeText={setDescricao}
+          value={descricao}
         />
         <Input.Field
           className="bg-white   text-center p-4 text-xl rounded-lg"
@@ -79,13 +81,13 @@ function Create({ navigation }: any) {
         </View>
 
         <View className="h-20 mt-10">
-          {nome == "" || descricacao == "" || valor == "" || image == "" ? (
+          {nome == "" || descricao == "" || valor == "" || image == "" ? (
             <Button title="Cadastrar" disabled />
           ) : (
             <Button
               title="Cadastrar"
               onPress={() => {
-                addTask();
+                addProduto();
               }}
             />
           )}
