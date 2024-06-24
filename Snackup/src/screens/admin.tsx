@@ -5,26 +5,25 @@ import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
-interface Produto {
+interface Usuario {
   nome: string;
   idUser: string;
 }
 
-function Admin({ navigation }: any, { nome }: Produto) {
-  const [produto, setProduto] = useState<Produto[]>([]);
+function Admin({ navigation }: any, { nome }: Usuario) {
+  const [usuario, setUsuario] = useState<Usuario[]>([]);
   const user = auth.currentUser;
   useEffect(() => {
     const productCollection = collection(database, "Usuario");
     const listen = onSnapshot(productCollection, (query) => {
-      const list: Produto[] = [];
+      const list: Usuario[] = [];
       query.forEach((doc) => {
-        const data = doc.data() as Produto;
-        // Exemplo de condição: adicionar apenas produtos com valor não vazio
+        const data = doc.data() as Usuario;
         if (data.idUser == user?.uid) {
           list.push({ ...data, idUser: doc.id });
         }
       });
-      setProduto(list);
+      setUsuario(list);
     });
 
     return () => listen();
@@ -38,7 +37,7 @@ function Admin({ navigation }: any, { nome }: Produto) {
         </Text>
         <Text className="text-lg font-regular color-orange">
           <FlatList
-            data={produto}
+            data={usuario}
             renderItem={({ item }) => {
               return (
                 <View>
