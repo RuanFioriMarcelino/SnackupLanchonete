@@ -8,6 +8,8 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getStorage } from "firebase/storage";
+import "firebase/storage"; // Se estiver usando armazenamento
 
 const firebaseConfig = {
   apiKey: "AIzaSyCARgnJtbsZ0n4onUUDxmvTyF5rLbDboeA",
@@ -21,7 +23,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getFirestore(app);
 const auth = getAuth(app);
-
+export const storage = getStorage(app);
 export {
   database,
   collection,

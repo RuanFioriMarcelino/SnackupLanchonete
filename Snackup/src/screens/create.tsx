@@ -1,19 +1,20 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ProgressBarAndroidComponent } from "react-native";
 import { database, auth } from "../config/firebaseconfig";
 import { collection, addDoc } from "firebase/firestore";
 import { useState } from "react";
 import { Input } from "@/components/input";
 import { Button } from "@/components/button";
+import { storage } from "../config/firebaseconfig";
 
 import * as ImagePicker from "expo-image-picker";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 function Create({ navigation }: any) {
   const [nome, setNome] = useState<string>("");
   const [descricao, setDescricao] = useState<string>("");
   const [valor, setValor] = useState<string>("");
   const [image, setImage] = useState<string>("");
-
-  const imageUri = image;
+  const [progress, setProgress] = useState(0);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -23,16 +24,42 @@ function Create({ navigation }: any) {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      const { uri } = result.assets[0];
+      uploadImage(uri);
     }
+  };
+
+  const uploadImage = async (uri: any) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const fileName = uri.split("/").pop();
+    const storageRef = ref(storage, `images/${fileName}`);
+
+    const uploadTask = uploadBytesResumable(storageRef, blob);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress);
+      },
+      (error) => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          setImage(url);
+        });
+      }
+    );
   };
 
   const addProduto = async () => {
     try {
-      const user = auth.currentUser; // Obtém o usuário atualmente autenticado
+      const user = auth.currentUser;
+
       if (!user) {
         throw new Error("No user is authenticated");
       }
@@ -41,15 +68,16 @@ function Create({ navigation }: any) {
         nome: nome,
         descricao: descricao,
         valor: valor,
-        imagem: image,
+        image: image,
         idUser: user.uid,
       });
+
       setNome("");
       setDescricao("");
       setValor("");
       setImage("");
     } catch (error) {
-      console.error("Error adding snackup: ", error);
+      console.error("Error adding product: ", error);
     }
   };
   return (
@@ -91,7 +119,7 @@ function Create({ navigation }: any) {
               }}
             />
           )}
-          <Image source={{ uri: imageUri }} className="w-20 h-20" />
+          <Image source={{ uri: image }} className="w-20 h-20" />
         </View>
       </View>
     </View>

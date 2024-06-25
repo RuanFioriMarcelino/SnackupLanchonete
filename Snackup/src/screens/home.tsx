@@ -18,7 +18,7 @@ interface Produto {
   nome: string;
   descricao: string;
   valor: string;
-  imagem: string;
+  image: string;
 }
 
 export default function Home() {
@@ -72,7 +72,7 @@ export default function Home() {
                   return (
                     <View className="mr-4 bg-white rounded-lg ">
                       <Image
-                        source={{ uri: item.imagem }}
+                        source={{ uri: item.image }}
                         className="w-28 h-24 rounded-t-lg"
                       />
                       <View className="p-1 -mt-1 bg-white rounded-b-lg">
