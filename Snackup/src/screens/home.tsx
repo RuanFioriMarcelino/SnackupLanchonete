@@ -21,10 +21,8 @@ interface Produto {
   image: string;
 }
 
-export default function Home(/* route: any */) {
+export default function Home() {
   const [produto, setProduto] = useState<Produto[]>();
-  /*   const a = route.cond;
-  console.log(a); */
 
   useEffect(() => {
     const productCollection = collection(database, "Produto");

@@ -17,6 +17,7 @@ import logout from "@/screens/logout";
 import Create from "@/screens/create";
 import Read from "@/screens/read";
 import Update from "@/screens/update";
+import { auth } from "@/config/firebaseconfig";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -51,24 +52,37 @@ function CustomDrawerContent(props: any) {
 }
 
 function MyDrawer() {
-  return (
-    <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={{
-        headerTransparent: true,
-        headerTitle: "",
-        headerTintColor: colors.white,
-        drawerStyle: {
-          backgroundColor: colors.orange,
-          borderTopRightRadius: 8,
-          borderBottomRightRadius: 8,
-        },
-        drawerActiveTintColor: "white",
-      }}
-    >
-      <Drawer.Screen name="HomeFunction" component={Home} />
-    </Drawer.Navigator>
-  );
+  const user = auth.currentUser;
+  if (user) {
+    return (
+      <Drawer.Navigator
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
+        screenOptions={{
+          headerTransparent: true,
+          headerTitle: "",
+          headerTintColor: colors.white,
+          drawerStyle: {
+            backgroundColor: colors.orange,
+            borderTopRightRadius: 8,
+            borderBottomRightRadius: 8,
+          },
+          drawerActiveTintColor: "white",
+        }}
+      >
+        <Drawer.Screen name="Home" component={Home} />
+      </Drawer.Navigator>
+    );
+  } else {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    );
+  }
 }
 
 export default function MyStack() {

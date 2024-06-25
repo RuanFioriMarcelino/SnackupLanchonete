@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "src/screens/task.js", "src/screens/read.tsx"  ]
+, "src/screens/task.js", "src/screens/read.tsx", "src/screens/entry.tsx", "src/screens/home.js"  ]
 }
