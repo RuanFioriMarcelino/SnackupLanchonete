@@ -1,33 +1,11 @@
 import { Button } from "@/components/button";
-import { auth, database } from "@/config/firebaseconfig";
-import { collection, onSnapshot } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import logout from "./logout";
+import { useGetUser } from "@/components/getuser";
 
-interface Usuario {
-  nome: string;
-  idUser: string;
-}
-
-function Admin({ navigation }: any, { nome }: Usuario) {
-  const [usuario, setUsuario] = useState<Usuario[]>([]);
-  const user = auth.currentUser;
-  useEffect(() => {
-    const productCollection = collection(database, "Usuario");
-    const listen = onSnapshot(productCollection, (query) => {
-      const list: Usuario[] = [];
-      query.forEach((doc) => {
-        const data = doc.data() as Usuario;
-        if (data.idUser == user?.uid) {
-          list.push({ ...data, idUser: doc.id });
-        }
-      });
-      setUsuario(list);
-    });
-
-    return () => listen();
-  }, []);
+function Admin({ navigation }: any) {
+  const usuario = useGetUser();
 
   return (
     <View className="bg-orange flex-1 ">
@@ -42,7 +20,6 @@ function Admin({ navigation }: any, { nome }: Usuario) {
               return (
                 <View>
                   <Text className="font-regular text-xl">
-                    {" "}
                     Bem Vindo {item.nome}
                   </Text>
                 </View>
@@ -63,6 +40,12 @@ function Admin({ navigation }: any, { nome }: Usuario) {
             title="Cadastrar"
             onPress={() => navigation.navigate("Create")}
           />
+        </View>
+        <View className="h-16 w-56 ">
+          <Button title="Home" onPress={() => navigation.navigate("Home")} />
+        </View>
+        <View className="h-16 w-56 ">
+          <Button title="Sair" onPress={() => logout({ navigation })} />
         </View>
       </View>
     </View>

@@ -18,6 +18,7 @@ import Create from "@/screens/create";
 import Read from "@/screens/read";
 import Update from "@/screens/update";
 import { auth } from "@/config/firebaseconfig";
+import { useGetUser } from "@/components/getuser";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -53,6 +54,7 @@ function CustomDrawerContent(props: any) {
 
 function MyDrawer() {
   const user = auth.currentUser;
+  const usuario = useGetUser();
   if (user) {
     return (
       <Drawer.Navigator
@@ -69,7 +71,19 @@ function MyDrawer() {
           drawerActiveTintColor: "white",
         }}
       >
-        <Drawer.Screen name="Home" component={Home} />
+        <Drawer.Screen
+          name="Home"
+          component={Home}
+          options={{ title: `Bem Vindo ${usuario.map((user) => user.nome)}` }}
+        />
+        {user.uid === "SCQuLd78XnPRdVXjEyYO8GMMLfO2" ||
+        user.uid === "wQJtab93vGPboIpkMYqzNNCHZHt2" ? (
+          <Drawer.Screen
+            name="Admin"
+            component={Admin}
+            options={{ title: "Painel do Administrador" }}
+          />
+        ) : null}
       </Drawer.Navigator>
     );
   } else {

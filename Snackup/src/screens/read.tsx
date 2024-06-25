@@ -19,7 +19,7 @@ interface Produto {
   valor: string;
 }
 
-export default function Task({ navigation }: any) {
+export default function Read({ navigation }: any) {
   const [produto, setProduto] = useState<Produto[]>([]);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function Task({ navigation }: any) {
           Alterar e Deletar
         </Text>
       </View>
-      <ScrollView horizontal={false}>
+      <ScrollView horizontal={false} className="pt-2 rounded-t-lg">
         <FlatList
           className="mt-10 p-4"
           data={produto}

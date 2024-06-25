@@ -26,16 +26,9 @@ export default function Signin({ navigation }: any) {
         email,
         password
       );
-      if (
-        userCredential.user.uid === "SCQuLd78XnPRdVXjEyYO8GMMLfO2" ||
-        userCredential.user.uid === "wQJtab93vGPboIpkMYqzNNCHZHt2"
-      ) {
-        navigation.navigate("Admin", { idUser: userCredential.user.uid });
-      } else {
-        navigation.navigate("Home", {
-          idUser: userCredential.user.uid,
-        });
-      }
+
+      navigation.navigate("Home", { idUser: userCredential.user.uid });
+
       console.log(userCredential.user.uid);
     } catch (error) {
       console.error("Erro ao fazer login:", error);

@@ -9,13 +9,18 @@ export default function Update({ navigation, route }: any) {
   const [nomeEdit, setNomeEdit] = useState(route.params.nome);
   const [valorEdit, setValorEdit] = useState(route.params.valor);
   const nome = route.params.nome;
+
   function editTask() {
     const taskdocRef = doc(database, "Produto", route.params.id);
     updateDoc(taskdocRef, {
       descricao: descricaoEdit,
       nome: nomeEdit,
+      valor: valorEdit,
     });
-    navigation.navigate("Produtos");
+    setNomeEdit("");
+    setValorEdit("");
+    setDescricaoEdit("");
+    navigation.navigate("Read");
   }
 
   return (
