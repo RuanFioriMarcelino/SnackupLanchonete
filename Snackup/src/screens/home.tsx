@@ -37,7 +37,7 @@ export default function Home() {
 
   return (
     <View className="bg-orange flex-1 items-center ">
-      <Text className="text-7xl font-bold text-white mt-9">SNACKUP</Text>
+      <Text className="text-7xl font-bold text-white mt-12">SNACKUP</Text>
       <View className="bg-white flex-row justify-around w-96  gap-8 rounded-large p-2 mb-6  h-12">
         <Icon name="shopping-cart" size={30} color={colors.orange} />
         <TextInput
@@ -53,38 +53,68 @@ export default function Home() {
           CARDÁPIO
         </Text>
         <View className="pl-4 w-full justify-start ">
-          <View className="">
-            <View className="bg-orange w-40 rounded-t-lg mt-8  ">
-              <Text className="text-center text-2xl font-medium pt-2">
-                Hamburger
-              </Text>
-            </View>
-
-            <ScrollView
-              showsHorizontalScrollIndicator={false}
-              horizontal={true}
-              className="bg-orange p-4 rounded-bl-lg "
-            >
-              <FlatList
-                horizontal={true}
-                data={produto}
-                renderItem={({ item }) => {
-                  return (
-                    <View className="mr-4 bg-white rounded-lg ">
-                      <Image
-                        source={{ uri: item.image }}
-                        className="w-28 h-24 rounded-t-lg"
-                      />
-                      <View className="p-1 -mt-1 bg-white rounded-b-lg">
-                        <Text className="font-bold">{item.nome}</Text>
-                        <Text className="text-orange">R$ {item.valor}</Text>
-                      </View>
-                    </View>
-                  );
-                }}
-              />
-            </ScrollView>
+          <View className="bg-orange w-40 rounded-t-lg mt-8  ">
+            <Text className="text-center text-2xl font-medium pt-2">Pizza</Text>
           </View>
+
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            className="bg-orange p-4 rounded-bl-lg "
+          >
+            <FlatList
+              horizontal={true}
+              data={produto}
+              renderItem={({ item }) => {
+                return item.nome == "Pizza" ? (
+                  <View className="mr-4 bg-white rounded-lg ">
+                    <Image
+                      source={{ uri: item.image }}
+                      className="w-28 h-24 rounded-t-lg"
+                    />
+                    <View className="p-1 -mt-1 bg-white rounded-b-lg">
+                      <Text className="font-bold">{item.nome}</Text>
+                      <Text className="text-orange">R$ {item.valor}</Text>
+                    </View>
+                  </View>
+                ) : null;
+              }}
+            />
+          </ScrollView>
+        </View>
+      </View>
+      <View className="flex-1 bg-white w-full  items-center ">
+        <View className="pl-4 w-full justify-start ">
+          <View className="bg-orange w-40 rounded-t-lg mt-8  ">
+            <Text className="text-center text-2xl font-medium pt-2">
+              Pastel
+            </Text>
+          </View>
+
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            className="bg-orange p-4 rounded-bl-lg "
+          >
+            <FlatList
+              horizontal={true}
+              data={produto}
+              renderItem={({ item }) => {
+                return item.nome == "Pastel" ? (
+                  <View className="mr-4 bg-white rounded-lg ">
+                    <Image
+                      source={{ uri: item.image }}
+                      className="w-28 h-24 rounded-t-lg"
+                    />
+                    <View className="p-1 -mt-1 bg-white rounded-b-lg">
+                      <Text className="font-bold">{item.nome}</Text>
+                      <Text className="text-orange">R$ {item.valor}</Text>
+                    </View>
+                  </View>
+                ) : null;
+              }}
+            />
+          </ScrollView>
         </View>
       </View>
     </View>

@@ -2,15 +2,15 @@ import { Button } from "@/components/button";
 import { Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import logout from "./logout";
-import { useGetUser } from "@/components/getuser";
+import { useGetUser } from "@/components/getUser";
 
 function Admin({ navigation }: any) {
   const usuario = useGetUser();
 
   return (
     <View className="bg-orange flex-1 ">
-      <View className="bg-white rounded-b-large items-center justify-center p-2 h-44 ">
-        <Text className="text-4xl text-center font-bold color-orange">
+      <View className="bg-white rounded-b-large items-center h-44 ">
+        <Text className="text-4xl text-center font-bold mt-12 color-orange">
           Painel do Administrador
         </Text>
         <Text className="text-lg font-regular color-orange">

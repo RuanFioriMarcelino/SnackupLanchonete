@@ -19,7 +19,7 @@ export default function Entry({ navigation }: any) {
         <Animatable.View
           animation="fadeInDown"
           delay={400}
-          className="bg-white rounded-b-large items-center justify-center p-2 h-44 "
+          className="bg-white rounded-b-large items-center justify-center p-4 h-44 "
         >
           <Text className="text-7xl font-bold color-orange">SNACKUP</Text>
           <Text className="text-slg font-regular color-orange">
