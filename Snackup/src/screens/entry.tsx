@@ -5,6 +5,9 @@ import * as Animatable from "react-native-animatable";
 
 import React from "react";
 
+interface Teste {
+  cond: string;
+}
 export default function Entry({ navigation }: any) {
   return (
     <View className="bg-orange justify-center  ">
@@ -37,7 +40,7 @@ export default function Entry({ navigation }: any) {
           <Text className="text-white font-bold text-xl">OU </Text>
           <View className=" w-10/12 rounded-lg bg-white/75 p-1">
             <Pressable
-              onPress={() => navigation.navigate("Home")}
+              onPress={() => navigation.navigate("Home", { cond: "rue" })}
               className="opacity-70 rounded-lg"
             >
               <Text className="uppercase text-lg text-orange font-bold text-center ">

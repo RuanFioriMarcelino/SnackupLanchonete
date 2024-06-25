@@ -15,7 +15,6 @@ function Create({ navigation }: any) {
   const [valor, setValor] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [progress, setProgress] = useState(0);
-  let [imageURI, setImageURI] = useState<string>();
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -24,10 +23,10 @@ function Create({ navigation }: any) {
       aspect: [3, 4],
       quality: 1,
     });
+
     if (!result.canceled) {
       const { uri } = result.assets[0];
-      setImageURI(uri);
-      setImage(uri);
+      uploadImage(uri);
     }
   };
 
@@ -55,7 +54,6 @@ function Create({ navigation }: any) {
         });
       }
     );
-    setProgress(0);
   };
 
   const addProduto = async () => {
@@ -66,9 +64,6 @@ function Create({ navigation }: any) {
         throw new Error("No user is authenticated");
       }
       const tasksCollection = collection(database, "Produto");
-
-      await uploadImage(imageURI);
-
       await addDoc(tasksCollection, {
         nome: nome,
         descricao: descricao,
@@ -113,10 +108,10 @@ function Create({ navigation }: any) {
           <Button title="Foto do Produto" onPress={pickImage} />
         </View>
         <Text className="text-center text-2xl text-white font-bold">
-          {imageURI ? (
+          {!image ? (
             `${progress}%`
           ) : (
-            <Image source={{ uri: image }} className="w-20 h-20" />
+            <Image source={{ uri: image }} className="w-20 h-30" />
           )}
         </Text>
         <View className="h-20 mt-10">

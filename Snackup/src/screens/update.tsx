@@ -1,4 +1,4 @@
-import { View, Text, Pressable, TextInput } from "react-native";
+import { View, Text } from "react-native";
 import { useState } from "react";
 import { database, doc, updateDoc } from "@/config/firebaseconfig";
 import { Input } from "@/components/input";
