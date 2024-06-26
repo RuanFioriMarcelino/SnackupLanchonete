@@ -70,11 +70,14 @@ export default function Home() {
                   <View className="mr-4 bg-white rounded-lg ">
                     <Image
                       source={{ uri: item.image }}
-                      className="w-28 h-24 rounded-t-lg"
+                      className="w-32 h-32 rounded-t-lg"
                     />
                     <View className="p-1 -mt-1 bg-white rounded-b-lg">
                       <Text className="font-bold">{item.nome}</Text>
-                      <Text className="text-orange">R$ {item.valor}</Text>
+                      <Text className="text-sm w-28 h-8 leading-3 pt-1">
+                        {item.descricao}
+                      </Text>
+                      <Text className="text-orange ">R$ {item.valor}</Text>
                     </View>
                   </View>
                 ) : null;
@@ -104,10 +107,13 @@ export default function Home() {
                   <View className="mr-4 bg-white rounded-lg ">
                     <Image
                       source={{ uri: item.image }}
-                      className="w-28 h-24 rounded-t-lg"
+                      className="w-32 h-32 rounded-t-lg"
                     />
                     <View className="p-1 -mt-1 bg-white rounded-b-lg">
                       <Text className="font-bold">{item.nome}</Text>
+                      <Text className="text-sm w-28 h-8 leading-3 pt-1">
+                        {item.descricao}
+                      </Text>
                       <Text className="text-orange">R$ {item.valor}</Text>
                     </View>
                   </View>

@@ -2,7 +2,7 @@ import { Button } from "@/components/button";
 import { Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import logout from "./logout";
-import { useGetUser } from "@/components/getUser";
+import { useGetUser } from "../components/getuser";
 
 function Admin({ navigation }: any) {
   const usuario = useGetUser();

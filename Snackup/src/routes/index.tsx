@@ -18,7 +18,7 @@ import Create from "@/screens/create";
 import Read from "@/screens/read";
 import Update from "@/screens/update";
 import { auth } from "@/config/firebaseconfig";
-import { useGetUser } from "@/components/getUser";
+import { useGetUser } from "@/components/getuser";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
